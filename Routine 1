@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Full Body Power – Post-Hyrox</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090b0e;--surface:#11151c;--s2:#181e27;--border:#1e2530;
+  --accent:#E87A0A;--adim:rgba(232,122,10,0.11);
+  --text:#dde3ec;--muted:#5a6a7e;
+  --green:#10b981;--blue:#3b82f6;--purple:#8b5cf6;--red:#ef4444;--yellow:#f59e0b;
+}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;line-height:1.5; -webkit-text-size-adjust: 100%;}
+
+/* ── HEADER ── */
+.hdr{padding:28px 20px 22px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#090b0e 0%,#0e121a 100%);position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(232,122,10,.1) 0%,transparent 65%);pointer-events:none}
+.hdr h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,7vw,44px);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;line-height:1;margin-bottom:6px}
+.hdr h1 em{font-style:normal;color:var(--accent)}
+.hdr-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.3px}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:3px;border:1px solid var(--border);color:var(--muted);background:var(--surface);text-transform:uppercase;letter-spacing:.5px}
+.badge.hl{border-color:var(--accent);color:var(--accent);background:var(--adim)}
+
+/* ── TABS ── */
+.tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto}
+.tab-btn{padding:13px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:color .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ── PANELS ── */
+.panel{display:none;padding:20px}
+.panel.active{display:block}
+
+/* ── PHASE TOGGLE ── */
+.phase-toggle{display:flex;gap:8px;margin-bottom:20px}
+.phase-btn{flex:1;padding:11px 8px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
+.phase-btn.active{border-color:var(--accent);color:var(--accent);background:var(--adim)}
+
+/* ── SESSION ACCORDION ── */
+.session{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden}
+.session-head{display:flex;align-items:center;padding:14px 16px;cursor:pointer;gap:12px;user-select:none;-webkit-tap-highlight-color:transparent}
+.session-head:hover{background:rgba(255,255,255,.02)}
+.s-letter{width:38px;height:38px;background:var(--accent);color:#000;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:5px;flex-shrink:0}
+.s-title{flex:1}
+.s-title h3{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.s-title p{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.chevron{color:var(--muted);font-size:11px;transition:transform .2s}
+.session.open .chevron{transform:rotate(180deg)}
+.session-body{display:none;padding:4px 16px 16px}
+.session.open .session-body{display:block}
+
+/* ── ACTIVATION ── */
+.activation{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:5px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#93c5fd;line-height:1.7}
+.activation strong{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:4px}
+
+/* ── BLOCK LABEL ── */
+.blk-title{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:12px 0 6px;display:flex;align-items:center;gap:8px}
+.blk-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── EXERCISE TABLE ── */
+table.ex{width:100%;border-collapse:collapse}
+.ex tr{border-bottom:1px solid rgba(30,37,48,.9)}
+.ex tr:last-child{border-bottom:none}
+.ex td{padding:7px 4px;vertical-align:middle}
+.td-n{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--border);width:20px;text-align:center}
+.td-name{font-size:13px;font-weight:500;padding-left:3px}
+.tag{display:inline-block;font-size:9px;font-family:'JetBrains Mono',monospace;padding:1px 5px;border-radius:3px;margin-left:5px;text-transform:uppercase;vertical-align:middle;white-space:nowrap}
+.tF{background:rgba(239,68,68,.12);color:#f87171}
+.tE{background:rgba(245,158,11,.12);color:#fbbf24}
+.tH{background:rgba(16,185,129,.12);color:#34d399}
+.tI{background:rgba(139,92,246,.12);color:#a78bfa}
+.tS{background:rgba(59,130,246,.12);color:#60a5fa}
+.td-vol{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);white-space:nowrap;text-align:right;padding-right:6px}
+.td-rest{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap;text-align:right}
+.ex-note{font-size:11px;color:var(--muted);font-style:italic;padding:0 4px 5px 28px}
+
+/* ── PROG CARDS ── */
+.prog-h{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.prog-h:first-child{margin-top:0}
+.pgrid{display:grid;gap:10px}
+.pc{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:13px 15px}
+.pc.g{border-left-color:var(--green)}
+.pc.b{border-left-color:var(--blue)}
+.pc.p{border-left-color:var(--purple)}
+.pc.r{border-left-color:var(--red)}
+.pc.y{border-left-color:var(--yellow)}
+.pc h4{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
+.pc p,.pc li{font-size:13px;color:#94a3b8;line-height:1.65}
+.pc ul{list-style:none;margin-top:3px}
+.pc li::before{content:'→ ';color:var(--accent)}
+.pc code{font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(255,255,255,.05);padding:1px 5px;border-radius:3px;color:var(--text)}
+.pc.g li::before{color:var(--green)}
+.pc.b li::before{color:var(--blue)}
+.pc.r li::before{color:var(--red)}
+
+/* ── PLANNING ── */
+.week-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px}
+.w-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+.week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.day{text-align:center;padding:8px 3px;border-radius:5px;border:1px solid var(--border)}
+.d-name{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+.d-act{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700}
+.day.gym{background:rgba(232,122,10,.08);border-color:rgba(232,122,10,.3)}
+.day.gym .d-act{color:var(--accent)}
+.day.run{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.25)}
+.day.run .d-act{color:var(--blue)}
+.day.off{opacity:.45}
+.day.off .d-act{color:var(--muted)}
+
+/* ── ITB ── */
+.itb-alert{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:13px 15px;margin-bottom:18px;font-size:13px;color:#94a3b8;line-height:1.65}
+.itb-alert strong{display:block;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+
+/* ── MISC ── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+small{font-size:10px;font-weight:400;opacity:.8;display:block;margin-top:2px;letter-spacing:.3px;text-transform:none;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Full Body <em>Power</em></h1>
+  <p class="hdr-sub">Post-Hyrox · 8 semaines · Force → Force-Hypertrophie</p>
+  <div class="badges">
+    <span class="badge">3×/semaine salle</span>
+    <span class="badge">~55-60 min/séance</span>
+    <span class="badge hl">+ 2-3 runs Kiprun</span>
+    <span class="badge">Épaules · Chaîne Post.</span>
+    <span class="badge">Protection IT Band</span>
+  </div>
+</div>
+
+<nav class="tabs">
+  <button class="tab-btn active" onclick="switchTab('seances',this)">Séances</button>
+  <button class="tab-btn" onclick="switchTab('progression',this)">Progression</button>
+  <button class="tab-btn" onclick="switchTab('planning',this)">Planning</button>
+  <button class="tab-btn" onclick="switchTab('itb',this)">Bandelette IT</button>
+</nav>
+
+<div id="panel-seances" class="panel active">
+  <div class="phase-toggle">
+    <button class="phase-btn active" onclick="switchPhase(1,this)">Phase 1 · S1–4<small>Force &amp; Fondation</small></button>
+    <button class="phase-btn" onclick="switchPhase(2,this)">Phase 2 · S5–8<small>Force-Hypertrophie</small></button>
+  </div>
+  <div id="sessions-container"></div>
+</div>
+
+<div id="panel-progression" class="panel">
+  <p class="prog-h">Règles – Lifts principaux</p>
+  <div class="pgrid">
+    <div class="pc g">
+      <h4>✅ Augmente le poids (+2.5 kg)</h4>
+      <p>Tu atteins le haut de la fourchette sur toutes les séries.<br>
+      <code>Ex : 4×4-6 → tu fais 4×6 → +2.5 kg</code></p>
+    </div>
+    <div class="pc r">
+      <h4>🔻 Plateau</h4>
+      <p>Si tu stagnes 2 semaines, déload ou vérifie ta fatigue de course.</p>
+    </div>
+  </div>
+</div>
+
+<div id="panel-planning" class="panel">
+  <div class="week-box">
+    <div class="w-label">Option B · Recommandé</div>
+    <div class="week-row">
+      <div class="day gym"><div class="d-name">Lun</div><div class="d-act">A</div></div>
+      <div class="day off"><div class="d-name">Mar</div><div class="d-act">OFF</div></div>
+      <div class="day gym"><div class="d-name">Mer</div><div class="d-act">B</div></div>
+      <div class="day run"><div class="d-name">Jeu</div><div class="d-act">Run</div></div>
+      <div class="day gym"><div class="d-name">Ven</div><div class="d-act">C</div></div>
+      <div class="day run"><div class="d-name">Sam</div><div class="d-act">Run</div></div>
+      <div class="day off"><div class="d-name">Dim</div><div class="d-act">OFF</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="panel-itb" class="panel">
+  <div class="itb-alert">
+    <strong>⚠ Protection Bandelette IT</strong>
+    Le renforcement excentrique des ischios et fessiers est ta priorité.
+  </div>
+</div>
+
+<script>
+const D={
+  1:[
+    {
+      letter:'A',title:'Force Basse + Poussée',
+      meta:'~55 min · Squat · RDL · Bench',
+      act:['Clamshells 2×15','Hip circles 2×10','Fente latérale BW 2×10'],
+      blocks:[
+        {label:'Force principale',ex:[
+          {n:'Back Squat',t:'F',v:'4×4-6',r:'3 min',note:'LIFT PRINCIPAL'},
+          {n:'RDL',t:'F',v:'3×6-8',r:'2.5 min',note:'Protection IT Band'},
+          {n:'Développé couché',t:'F',v:'3×5-7',r:'2.5 min'}
+        ]}
+      ]
+    },
+    {
+      letter:'B',title:'Force Haute + Chaîne Post.',
+      meta:'~57 min · Tractions · OHP · Hip Thrust',
+      act:['Clamshells 2×15','Arm circles 2×15'],
+      blocks:[
+        {label:'Force principale',ex:[
+          {n:'Tractions lestées',t:'F',v:'4×4-6',r:'3 min'},
+          {n:'OHP barre',t:'F',v:'4×5-7',r:'2.5 min'},
+          {n:'Hip Thrust',t:'H',v:'3×8-10',r:'2 min'}
+        ]}
+      ]
+    },
+    {
+      letter:'C',title:'Athlétique Full Body',
+      meta:'~55 min · KB Swing · Split Squat · Dips',
+      act:['Clamshells 2×15','Dead Bug 2×8'],
+      blocks:[
+        {label:'Force principale',ex:[
+          {n:'Split Squat Bulgare',t:'H',v:'3×8-10/j',r:'2 min'},
+          {n:'Rowing barre',t:'F',v:'3×6-8',r:'2.5 min'},
+          {n:'Dips lestés',t:'F',v:'4×6-10',r:'2 min'}
+        ]}
+      ]
+    }
+  ],
+  2:[
+    {
+      letter:'A',title:'Force-Hyp Basse + Poussée',
+      meta:'~60 min · Volume ↑',
+      act:['Clamshells 2×15','Fente latérale 2×10'],
+      blocks:[
+        {label:'Force principale',ex:[
+          {n:'Back Squat',t:'F',v:'4×5-7',r:'3 min'},
+          {n:'RDL',t:'F',v:'4×8-10',r:'2.5 min'},
+          {n:'Développé couché',t:'F',v:'4×6-8',r:'2.5 min'}
+        ]}
+      ]
+    }
+  ]
+};
+
+function renderSessions(phase){
+  const data=D[phase] || D[1];
+  const c=document.getElementById('sessions-container');
+  c.innerHTML=data.map((s,i)=>`
+    <div class="session" id="s${i}">
+      <div class="session-head" onclick="toggle(${i})">
+        <div class="s-letter">${s.letter}</div>
+        <div class="s-title"><h3>${s.title}</h3><p>${s.meta}</p></div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="session-body">
+        <div class="activation">
+          <strong>⚡ Activation IT Band</strong>
+          ${s.act.map(a=>`→ ${a}`).join('<br>')}
+        </div>
+        ${s.blocks.map(b=>`
+          <div class="blk-title">${b.label}</div>
+          <table class="ex">
+            ${b.ex.map((e,j)=>`
+              <tr>
+                <td class="td-n">${j+1}</td>
+                <td class="td-name">${e.n}<span class="tag t${e.t}">${tagL(e.t)}</span></td>
+                <td class="td-vol">${e.v}</td>
+                <td class="td-rest">${e.r}</td>
+              </tr>
+              ${e.note?`<tr><td colspan="4" class="ex-note">${e.note}</td></tr>`:''}
+            `).join('')}
+          </table>
+        `).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function tagL(t){return{F:'Force',E:'Explo',H:'Hyp',I:'Iso',S:'Stab'}[t]||t}
+function toggle(i){ document.getElementById('s'+i).classList.toggle('open'); }
+function switchPhase(p,btn){
+  document.querySelectorAll('.phase-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSessions(p);
+}
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+renderSessions(1);
+</script>
+</body>
+</html>
