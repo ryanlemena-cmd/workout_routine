@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Full Body Power – Post-Hyrox</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -13,7 +13,7 @@
   --text:#dde3ec;--muted:#5a6a7e;
   --green:#10b981;--blue:#3b82f6;--purple:#8b5cf6;--red:#ef4444;--yellow:#f59e0b;
 }
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;line-height:1.5; -webkit-text-size-adjust: 100%;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;line-height:1.5}
 
 /* ── HEADER ── */
 .hdr{padding:28px 20px 22px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#090b0e 0%,#0e121a 100%);position:relative;overflow:hidden}
@@ -143,6 +143,7 @@ small{font-size:10px;font-weight:400;opacity:.8;display:block;margin-top:2px;let
   <button class="tab-btn" onclick="switchTab('itb',this)">Bandelette IT</button>
 </nav>
 
+<!-- ═══ SÉANCES ═══ -->
 <div id="panel-seances" class="panel active">
   <div class="phase-toggle">
     <button class="phase-btn active" onclick="switchPhase(1,this)">Phase 1 · S1–4<small>Force &amp; Fondation</small></button>
@@ -151,40 +152,197 @@ small{font-size:10px;font-weight:400;opacity:.8;display:block;margin-top:2px;let
   <div id="sessions-container"></div>
 </div>
 
+<!-- ═══ PROGRESSION ═══ -->
 <div id="panel-progression" class="panel">
+
   <p class="prog-h">Règles – Lifts principaux</p>
   <div class="pgrid">
     <div class="pc g">
       <h4>✅ Augmente le poids (+2.5 kg)</h4>
-      <p>Tu atteins le haut de la fourchette sur toutes les séries.<br>
-      <code>Ex : 4×4-6 → tu fais 4×6 → +2.5 kg</code></p>
+      <p>Tu atteins le <strong style="color:var(--text)">haut de la fourchette</strong> sur <strong style="color:var(--text)">toutes les séries</strong>.<br>
+      <code>Ex : 4×4-6 → tu fais 4×6 → +2.5 kg la séance suivante</code></p>
+    </div>
+    <div class="pc">
+      <h4>⏸ Garde le même poids</h4>
+      <p>Tu n'atteins pas le bas de la fourchette sur 2+ séries.<br>
+      <code>Ex : 4×4-6 → 6/5/4/3 → même poids, même objectif</code></p>
     </div>
     <div class="pc r">
-      <h4>🔻 Plateau</h4>
-      <p>Si tu stagnes 2 semaines, déload ou vérifie ta fatigue de course.</p>
+      <h4>🔻 Plateau 2 semaines consécutives</h4>
+      <ul>
+        <li>RPE ressenti &lt; 8 → force-toi à ajouter 1.25–2.5 kg</li>
+        <li>RPE ressenti ≥ 8 → déload (−30 % volume, charges inchangées) puis relance</li>
+        <li>RPE ≥ 9 régulièrement → réduis d'abord le volume de course</li>
+      </ul>
     </div>
   </div>
+
+  <p class="prog-h">Règles – Exercices accessoires</p>
+  <div class="pgrid">
+    <div class="pc b">
+      <h4>Élévations latérales, Face Pull, Hip Thrust…</h4>
+      <ul>
+        <li>Ajoute <strong style="color:var(--text)">1–2 reps/semaine</strong> jusqu'au haut de la fourchette</li>
+        <li>Haut atteint → +1.25 à 2 kg la semaine suivante</li>
+        <li>Nordic Curl : priorité qualité excentrique avant toute progression</li>
+      </ul>
+    </div>
+    <div class="pc p">
+      <h4>Plateau 3 semaines → Swap d'exercice</h4>
+      <ul>
+        <li>Élévations latérales haltères → câble ou Arnold Press</li>
+        <li>Face Pull → External rotation câble ou Band Pull Apart</li>
+        <li>Nordic Curl → Leg Curl machine + Hold isométrique en fin</li>
+        <li>Hip Thrust → Single-leg Hip Thrust ou Sumo DL léger</li>
+        <li>RDL → Good Morning ou Leg Curl allongé</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="prog-h">Quand changer d'exercice</p>
+  <div class="pgrid">
+    <div class="pc y">
+      <h4>Calendrier des rotations</h4>
+      <ul>
+        <li>Lifts principaux (Squat, Bench, OHP, Tractions, Dips) → <strong style="color:var(--text)">S4→S5 uniquement</strong>, ou si blessure</li>
+        <li>Accessoires → <strong style="color:var(--text)">fin de chaque phase (S4 puis S8)</strong></li>
+        <li>Explosif → <strong style="color:var(--text)">toutes les 4 semaines</strong> (Broad Jump → Box Jump → Drop Jump)</li>
+        <li>KB Swing → passage au KB Snatch ou Trap Bar Jump en P2</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="prog-h">Déload</p>
+  <div class="pgrid">
+    <div class="pc">
+      <h4>Semaines 4 et 8</h4>
+      <ul>
+        <li>Volume −30 % : supprimer 1 série par lift principal</li>
+        <li>Charges inchangées : l'intensité reste la même</li>
+        <li>Runs Kiprun en Zone 2 uniquement (pace conversation)</li>
+        <li>But : récupération tendineuse + SNC, pas de repos total</li>
+        <li>Tu dois finir la semaine de déload avec plus d'énergie que tu n'en as eu</li>
+      </ul>
+    </div>
+  </div>
+
 </div>
 
+<!-- ═══ PLANNING ═══ -->
 <div id="panel-planning" class="panel">
+  <p style="font-size:13px;color:#94a3b8;margin-bottom:16px;line-height:1.65">
+    L'objectif est de ne jamais enchaîner salle jambes + run le lendemain si la fatigue est ≥ 7/10. Les 3 options ci-dessous s'adaptent à ton agenda.
+  </p>
+
   <div class="week-box">
-    <div class="w-label">Option B · Recommandé</div>
+    <div class="w-label">Option A · 3 gym + 3 runs (charge maximale)</div>
     <div class="week-row">
-      <div class="day gym"><div class="d-name">Lun</div><div class="d-act">A</div></div>
-      <div class="day off"><div class="d-name">Mar</div><div class="d-act">OFF</div></div>
-      <div class="day gym"><div class="d-name">Mer</div><div class="d-act">B</div></div>
+      <div class="day gym"><div class="d-name">Lun</div><div class="d-act">Séance A</div></div>
+      <div class="day run"><div class="d-name">Mar</div><div class="d-act">Run</div></div>
+      <div class="day gym"><div class="d-name">Mer</div><div class="d-act">Séance B</div></div>
       <div class="day run"><div class="d-name">Jeu</div><div class="d-act">Run</div></div>
-      <div class="day gym"><div class="d-name">Ven</div><div class="d-act">C</div></div>
+      <div class="day gym"><div class="d-name">Ven</div><div class="d-act">Séance C</div></div>
       <div class="day run"><div class="d-name">Sam</div><div class="d-act">Run</div></div>
       <div class="day off"><div class="d-name">Dim</div><div class="d-act">OFF</div></div>
     </div>
   </div>
+
+  <div class="week-box">
+    <div class="w-label">Option B · 3 gym + 2 runs (recommandé si fatigue)</div>
+    <div class="week-row">
+      <div class="day gym"><div class="d-name">Lun</div><div class="d-act">Séance A</div></div>
+      <div class="day off"><div class="d-name">Mar</div><div class="d-act">OFF</div></div>
+      <div class="day gym"><div class="d-name">Mer</div><div class="d-act">Séance B</div></div>
+      <div class="day run"><div class="d-name">Jeu</div><div class="d-act">Run</div></div>
+      <div class="day gym"><div class="d-name">Ven</div><div class="d-act">Séance C</div></div>
+      <div class="day run"><div class="d-name">Sam</div><div class="d-act">Run</div></div>
+      <div class="day off"><div class="d-name">Dim</div><div class="d-act">OFF</div></div>
+    </div>
+  </div>
+
+  <div class="week-box">
+    <div class="w-label">Option C · 2 gym + 3 runs (semaines chargées pro / DGFiP)</div>
+    <div class="week-row">
+      <div class="day gym"><div class="d-name">Lun</div><div class="d-act">Séance A</div></div>
+      <div class="day run"><div class="d-name">Mar</div><div class="d-act">Run</div></div>
+      <div class="day off"><div class="d-name">Mer</div><div class="d-act">OFF</div></div>
+      <div class="day run"><div class="d-name">Jeu</div><div class="d-act">Run</div></div>
+      <div class="day gym"><div class="d-name">Ven</div><div class="d-act">Séance C</div></div>
+      <div class="day run"><div class="d-name">Sam</div><div class="d-act">Run</div></div>
+      <div class="day off"><div class="d-name">Dim</div><div class="d-act">OFF</div></div>
+    </div>
+  </div>
+
+  <div class="pc b" style="margin-top:4px">
+    <h4>Règles gym + course</h4>
+    <ul>
+      <li>Si gym + run le même jour obligatoire → gym en premier, run 3h+ après</li>
+      <li>Séance A (squat + RDL) → éviter le run le lendemain si fatigue jambes ≥ 7/10</li>
+      <li>Semaines S4 &amp; S8 (déload) → tous les runs en Zone 2</li>
+      <li>Après Hyrox : attends 7–10 jours avant de reprendre les séances lourdes</li>
+    </ul>
+  </div>
 </div>
 
+<!-- ═══ BANDELETTE IT ═══ -->
 <div id="panel-itb" class="panel">
   <div class="itb-alert">
-    <strong>⚠ Protection Bandelette IT</strong>
-    Le renforcement excentrique des ischios et fessiers est ta priorité.
+    <strong>⚠ Syndrome de la bandelette ilio-tibiale – Protocole de protection</strong>
+    Tes antécédents nécessitent une attention constante. Le renforcement du fessier moyen et des ischio-jambiers est ta meilleure protection à long terme. Ce programme a été conçu en tenant compte de cela.
+  </div>
+
+  <p class="prog-h">Activation obligatoire avant chaque séance (5 min)</p>
+  <div class="pc b">
+    <h4>Routine systématique</h4>
+    <ul>
+      <li>Clamshells avec élastique léger – 2×15/côté</li>
+      <li>Hip circle rotation debout – 2×10/sens</li>
+      <li>Fente latérale lente (poids du corps) – 2×10</li>
+      <li>Step-up latéral contrôlé – 2×10/jambe</li>
+    </ul>
+  </div>
+
+  <p class="prog-h">Exercices protecteurs intégrés dans le programme</p>
+  <div class="pgrid">
+    <div class="pc g">
+      <h4>Nordic Curl · Séance B</h4>
+      <p>Renforcement excentrique des ischios = protection #1. Réduit significativement le risque de récidive à la course. Priorité à la descente lente (4–5 sec), pas aux reps.</p>
+    </div>
+    <div class="pc g">
+      <h4>Hip Thrust · Séance B</h4>
+      <p>Activation maximale du grand fessier → soulage la tension latérale sur le genou lors de la course. Un fessier fort compense la traction de la bandelette.</p>
+    </div>
+    <div class="pc g">
+      <h4>Split Squat Bulgare · Séance C</h4>
+      <p>Force unilatérale et stabilité de hanche sans charge axiale excessive. Surveiller que le genou reste aligné avec le 2e orteil pendant tout le mouvement.</p>
+    </div>
+    <div class="pc g">
+      <h4>RDL · Séance A</h4>
+      <p>Renforce la chaîne postérieure en intégralité. Exécution dos neutre strict — évite de ronder pour gagner de l'amplitude. Descente jusqu'à tension forte, pas plus.</p>
+    </div>
+  </div>
+
+  <p class="prog-h">À éviter absolument</p>
+  <div class="pc r">
+    <h4>⛔ Facteurs de risque</h4>
+    <ul>
+      <li>Fentes latérales lourdes (adduction/abduction répétée sous charge)</li>
+      <li>Course en descente prolongée ou sur bitume exclusivement</li>
+      <li>Augmenter le volume de course de plus de 10 %/semaine</li>
+      <li>Sauter la routine d'activation avant une séance jambes</li>
+      <li>Reprendre la course avant que la douleur soit &lt; 3/10 à l'effort</li>
+    </ul>
+  </div>
+
+  <p class="prog-h">Signaux d'alerte</p>
+  <div class="pc y">
+    <h4>Quand réduire / stopper</h4>
+    <ul>
+      <li>Douleur latérale genou &gt; 3/10 en course → passer vélo ou natation ce jour-là</li>
+      <li>Douleur qui augmente progressivement durant la séance → stopper l'exercice</li>
+      <li>Douleur &gt; 24h après → repos 2 jours + glace 3×10 min/jour</li>
+      <li>Récidive nette → consulter kiné avant de reprendre la course</li>
+    </ul>
   </div>
 </div>
 
@@ -193,37 +351,58 @@ const D={
   1:[
     {
       letter:'A',title:'Force Basse + Poussée',
-      meta:'~55 min · Squat · RDL · Bench',
-      act:['Clamshells 2×15','Hip circles 2×10','Fente latérale BW 2×10'],
+      meta:'~55 min · Squat · RDL · Bench · Épaules',
+      act:['Clamshells élastique 2×15/côté','Hip circles 2×10','Fente latérale BW 2×10'],
       blocks:[
+        {label:'Explosivité',ex:[
+          {n:'Broad Jump',t:'E',v:'4×3',r:'60s',note:'Départ pieds parallèles, atterrissage absorbé — qualité absolue, pas de fatigue'}
+        ]},
         {label:'Force principale',ex:[
-          {n:'Back Squat',t:'F',v:'4×4-6',r:'3 min',note:'LIFT PRINCIPAL'},
-          {n:'RDL',t:'F',v:'3×6-8',r:'2.5 min',note:'Protection IT Band'},
-          {n:'Développé couché',t:'F',v:'3×5-7',r:'2.5 min'}
+          {n:'Back Squat',t:'F',v:'4×4-6',r:'3 min',note:'★ LIFT PRINCIPAL — progression kg si 4×6 atteints proprement'},
+          {n:'RDL (Romanian Deadlift)',t:'F',v:'3×6-8',r:'2.5 min',note:'Dos neutre strict, descente jusqu\'à tension forte des ischios. Protection IT Band.'},
+          {n:'Développé couché barre',t:'F',v:'3×5-7',r:'2.5 min',note:'★ LIFT PRINCIPAL — ~75-80% 1RM, pauses contrôlées sur la poitrine'}
+        ]},
+        {label:'Épaules — Superset',ex:[
+          {n:'Élévations latérales haltères',t:'H',v:'3×12-15',r:'—',note:'Enchaîner directement avec Face Pull ↓'},
+          {n:'Face Pull à la corde',t:'S',v:'3×15',r:'90s',note:'Coudes à hauteur épaules, tirer vers le visage — protection coiffe rotateurs'}
         ]}
       ]
     },
     {
       letter:'B',title:'Force Haute + Chaîne Post.',
-      meta:'~57 min · Tractions · OHP · Hip Thrust',
-      act:['Clamshells 2×15','Arm circles 2×15'],
+      meta:'~57 min · Tractions · OHP · Hip Thrust · Nordic Curl',
+      act:['Clamshells élastique 2×15/côté','Hip circles 2×10','Arm circles 2×15'],
       blocks:[
+        {label:'Explosivité',ex:[
+          {n:'CMJ (Counter Movement Jump)',t:'E',v:'4×3',r:'60s',note:'Contre-mouvement rapide, bras actifs — reset complet entre chaque rep'}
+        ]},
         {label:'Force principale',ex:[
-          {n:'Tractions lestées',t:'F',v:'4×4-6',r:'3 min'},
-          {n:'OHP barre',t:'F',v:'4×5-7',r:'2.5 min'},
-          {n:'Hip Thrust',t:'H',v:'3×8-10',r:'2 min'}
+          {n:'Tractions lestées (pronation)',t:'F',v:'4×4-6',r:'3 min',note:'★ LIFT PRINCIPAL — pleine amplitude, pas de kipping. BW si lest non disponible.'},
+          {n:'Développé militaire barre',t:'F',v:'4×5-7',r:'2.5 min',note:'★ LIFT PRINCIPAL épaules — stabilité scapulaire, barre devant le visage'}
+        ]},
+        {label:'Chaîne postérieure',ex:[
+          {n:'Hip Thrust barre',t:'H',v:'3×8-10',r:'2 min',note:'Extension complète + hold 1s en haut. Protection bandelette IT.'},
+          {n:'Nordic Curl',t:'F',v:'3×4-6',r:'2 min',note:'Descente LENTE 4-5 sec, retour avec poussée au sol. Priorité qualité > reps.'}
         ]}
       ]
     },
     {
       letter:'C',title:'Athlétique Full Body',
-      meta:'~55 min · KB Swing · Split Squat · Dips',
-      act:['Clamshells 2×15','Dead Bug 2×8'],
+      meta:'~55 min · KB Swing · Split Squat · Rowing · Dips',
+      act:['Clamshells élastique 2×15/côté','Hip circles 2×10','Dead Bug 2×8'],
       blocks:[
+        {label:'Puissance',ex:[
+          {n:'Kettlebell Swing lourd',t:'E',v:'4×8',r:'60s',note:'Hip hinge explosif, projection hanches — bras passifs, ne pas squatter'}
+        ]},
         {label:'Force principale',ex:[
-          {n:'Split Squat Bulgare',t:'H',v:'3×8-10/j',r:'2 min'},
-          {n:'Rowing barre',t:'F',v:'3×6-8',r:'2.5 min'},
-          {n:'Dips lestés',t:'F',v:'4×6-10',r:'2 min'}
+          {n:'Split Squat Bulgare haltères',t:'H',v:'3×8-10/j',r:'2 min',note:'Genou arrière à 5 cm du sol, avant en ligne avec le pied — contrôle IT Band'},
+          {n:'Rowing barre pronation',t:'F',v:'3×6-8',r:'2.5 min',note:'★ LIFT PRINCIPAL — buste ~45°, tirer vers nombril, tempo 2-1-1'},
+          {n:'Dips lestés',t:'F',v:'4×6-10',r:'2 min',note:'★ LIFT PRINCIPAL — descente 2-3 sec, épaules basses, pleine amplitude'}
+        ]},
+        {label:'Épaules + Gainage',ex:[
+          {n:'Élévations latérales câble',t:'H',v:'3×15',r:'—',note:'Enchaîner avec Face Pull ↓ — tension constante vs haltères'},
+          {n:'Face Pull',t:'S',v:'3×15',r:'75s',note:''},
+          {n:'Pallof Press (élastique/câble)',t:'I',v:'2×30s/côté',r:'45s',note:'Anti-rotation strict — ne pas laisser le tronc pivoter'}
         ]}
       ]
     }
@@ -231,21 +410,68 @@ const D={
   2:[
     {
       letter:'A',title:'Force-Hyp Basse + Poussée',
-      meta:'~60 min · Volume ↑',
-      act:['Clamshells 2×15','Fente latérale 2×10'],
+      meta:'~60 min · Volume ↑ · Squat · RDL · Bench · Épaules',
+      act:['Clamshells élastique 2×15/côté','Hip circles 2×10','Fente latérale BW 2×10'],
       blocks:[
+        {label:'Explosivité',ex:[
+          {n:'Box Jump (caisse)',t:'E',v:'4×3',r:'60s',note:'Hauteur progressive vs P1, atterrissage absorbé — reset complet, pas de rebond automatique'}
+        ]},
+        {label:'Force principale (volume ↑)',ex:[
+          {n:'Back Squat',t:'F',v:'4×5-7',r:'3 min',note:'★ LIFT PRINCIPAL — fourchette élargie, même charge si 4×4-6 non encore maîtrisé'},
+          {n:'RDL (Romanian Deadlift)',t:'F',v:'4×8-10',r:'2.5 min',note:'+1 série vs P1 — focus sur l\'étirement max des ischios'},
+          {n:'Développé couché barre',t:'F',v:'4×6-8',r:'2.5 min',note:'★ LIFT PRINCIPAL — +1 série, fourchette reps ↑ pour volume hypertrophique'}
+        ]},
+        {label:'Épaules — Superset (tension constante)',ex:[
+          {n:'Élévations latérales câble',t:'H',v:'3×15-20',r:'—',note:'Câble = tension en bas du mouvement, meilleur stimulus P2'},
+          {n:'Face Pull à la corde',t:'S',v:'3×15-20',r:'90s',note:''}
+        ]}
+      ]
+    },
+    {
+      letter:'B',title:'Force-Hyp Haute + Chaîne Post.',
+      meta:'~58 min · Tractions · OHP · Hip Thrust + · Nordic',
+      act:['Clamshells élastique 2×15/côté','Hip circles 2×10','Arm circles 2×15'],
+      blocks:[
+        {label:'Explosivité (réactive)',ex:[
+          {n:'Drop Jump (descente d\'une marche)',t:'E',v:'4×3',r:'60s',note:'Atterrir → rebondir immédiatement → temps au sol minimal. Plus réactif que CMJ.'}
+        ]},
         {label:'Force principale',ex:[
-          {n:'Back Squat',t:'F',v:'4×5-7',r:'3 min'},
-          {n:'RDL',t:'F',v:'4×8-10',r:'2.5 min'},
-          {n:'Développé couché',t:'F',v:'4×6-8',r:'2.5 min'}
+          {n:'Tractions lestées (pronation)',t:'F',v:'4×5-7',r:'3 min',note:'★ LIFT PRINCIPAL — fourchette ↑ vs P1, même lest ou légèrement +'},
+          {n:'Développé militaire barre',t:'F',v:'4×6-8',r:'2.5 min',note:'★ LIFT PRINCIPAL — fourchette ↑, maintenir la charge si possible'}
+        ]},
+        {label:'Chaîne postérieure (volume ↑)',ex:[
+          {n:'Hip Thrust barre',t:'H',v:'4×10-12',r:'2 min',note:'+1 série + reps vs P1 → congestion fessiers, protection IT Band'},
+          {n:'Nordic Curl',t:'F',v:'3×5-7',r:'2 min',note:'Légère progression reps — rester sur la qualité excentrique avant tout'}
+        ]}
+      ]
+    },
+    {
+      letter:'C',title:'Athlétique Full Body (densifié)',
+      meta:'~57 min · KB Swing · Split Squat · Rowing · Dips · Push Press',
+      act:['Clamshells élastique 2×15/côté','Hip circles 2×10','Dead Bug 2×8'],
+      blocks:[
+        {label:'Puissance',ex:[
+          {n:'Kettlebell Swing lourd',t:'E',v:'4×10',r:'60s',note:'+2 reps vs P1, même poids ou +. Volume de puissance ↑.'}
+        ]},
+        {label:'Force principale',ex:[
+          {n:'Split Squat Bulgare haltères',t:'H',v:'3×10-12/j',r:'2 min',note:'Reps ↑ vs P1 — même poids ou légèrement + si technique parfaite'},
+          {n:'Rowing barre pronation',t:'F',v:'4×8-10',r:'2.5 min',note:'★ LIFT PRINCIPAL — +1 série, volume épaisseur dorsale ↑'},
+          {n:'Dips lestés',t:'F',v:'3×8-12',r:'2 min',note:'★ LIFT PRINCIPAL — fourchette ↑, lest progressif si 3×12 atteints proprement'}
+        ]},
+        {label:'Épaules — Superset Explosif',ex:[
+          {n:'Push Press (barre ou haltères)',t:'E',v:'3×5',r:'—',note:'Superset avec Él. latérales ↓ — explosif sur la montée, descente contrôlée'},
+          {n:'Élévations latérales haltères',t:'H',v:'3×12',r:'90s',note:''},
+          {n:'Ab Wheel Rollouts',t:'I',v:'3×8-10',r:'60s',note:'Dos plat strict — ne pas laisser creuser le bas du dos'}
         ]}
       ]
     }
   ]
 };
 
+let currentPhase=1;
+
 function renderSessions(phase){
-  const data=D[phase] || D[1];
+  const data=D[phase];
   const c=document.getElementById('sessions-container');
   c.innerHTML=data.map((s,i)=>`
     <div class="session" id="s${i}">
@@ -256,7 +482,7 @@ function renderSessions(phase){
       </div>
       <div class="session-body">
         <div class="activation">
-          <strong>⚡ Activation IT Band</strong>
+          <strong>⚡ Activation IT Band – 5 min (obligatoire)</strong>
           ${s.act.map(a=>`→ ${a}`).join('<br>')}
         </div>
         ${s.blocks.map(b=>`
@@ -277,19 +503,27 @@ function renderSessions(phase){
     </div>`).join('');
 }
 
-function tagL(t){return{F:'Force',E:'Explo',H:'Hyp',I:'Iso',S:'Stab'}[t]||t}
-function toggle(i){ document.getElementById('s'+i).classList.toggle('open'); }
-function switchPhase(p,btn){
+function tagL(t){return{F:'Force',E:'Explosif',H:'Hyp',I:'Iso',S:'Stab'}[t]||t}
+
+function toggle(i){
+  const el=document.getElementById('s'+i);
+  el.classList.toggle('open');
+}
+
+function switchPhase(phase,btn){
+  currentPhase=phase;
   document.querySelectorAll('.phase-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  renderSessions(p);
+  renderSessions(phase);
 }
+
 function switchTab(id,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('panel-'+id).classList.add('active');
 }
+
 renderSessions(1);
 </script>
 </body>
